@@ -9,6 +9,8 @@ class Iwatemaru_admin
     read_line( fname ) # @line
     get_item_name
     set_lonlat
+    @missing = -999.99
+    set_temperature
   end
 
   # Initialize
@@ -27,44 +29,38 @@ class Iwatemaru_admin
       @line.each do | l |
         @inames.push( l.split( " " )[0] )
       end
-      p @inames
     end
 
-    def set_lonlat
-      set_lon
-      set_lat
+  # set_temperature
+    def set_temperature
+      j_bgn = search_inum( "TEMP" ) + 1
+      j_end = search_inum( "SAL" ) - 1
+      j_len = j_end - j_bgn
+      @temp = NArray.sfloat( @lon.length, j_len+1 )
+      for j in j_bgn..j_end
+        @temp[0..-1, j-j_bgn] = get_divided_na( j )
+      end
+      p @temp
     end
 
-      def set_lon
-        lon_org = get_divided( "LONG" )
-        @lon = NArray.sfloat( lon_org.length )
-        lon_org.each_with_index do | lorg, i |
-          @lon[i] = conv_deg_to_num( lorg )
-        end
-      end
-  
-      def set_lat
-        lat_org = get_divided( "LAT" )
-        @lat = NArray.sfloat( lat_org.length )
-        lat_org.each_with_index do | lorg, i |
-          @lat[i] = conv_deg_to_num( lorg )
-        end
-        p @lat
-      end
-  
-      def conv_deg_to_num( deg_org )
-      # "141-59"
-          deg, min  = deg_org.split( "-" )
-          return ( deg.to_f + ( min.to_f / 60.0 ).round(2) )
-      end
-
-    def get_divided( iname )
-      #
-      t_i = search_inum( iname )
-      vals =  @line[ t_i ].split( iname )[1]
+  # common
+    def get_divided( inum )
+      vals =  @line[ inum ].split( @inames[ inum ] )[1]
       txt_arr =  vals.split( " " )
       return txt_arr
     end
+      def get_divided_na( inum )
+        txt_arr = get_divided( inum )
+        na = NArray.sfloat( txt_arr.length )
+        for i in 0..txt_arr.length-1
+          if txt_arr[i] != "none"
+            na[i] = txt_arr[i].to_f
+          else
+            na[i] = @missing
+          end
+        end
+        return na
+      end
 
     def search_inum( iname )
       t_i = -1
@@ -76,6 +72,35 @@ class Iwatemaru_admin
       end
       return t_i
     end
+
+  # set_lonlat
+    def set_lonlat
+      set_lon
+      set_lat
+    end
+
+      def set_lon
+        lon_org = get_divided( search_inum( "LONG" ) )
+        @lon = NArray.sfloat( lon_org.length )
+        lon_org.each_with_index do | lorg, i |
+          @lon[i] = conv_deg_to_num( lorg )
+        end
+      end
+  
+      def set_lat
+        lat_org = get_divided( search_inum( "LAT" ) )
+        @lat = NArray.sfloat( lat_org.length )
+        lat_org.each_with_index do | lorg, i |
+          @lat[i] = conv_deg_to_num( lorg )
+        end
+      end
+  
+      def conv_deg_to_num( deg_org )
+      # "141-59"
+          deg, min  = deg_org.split( "-" )
+          return ( deg.to_f + ( min.to_f / 60.0 ).round(2) )
+      end
+
 end
 # class Iwatemaru_admin
 
