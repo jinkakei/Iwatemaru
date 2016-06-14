@@ -22,6 +22,15 @@
         when "rhoo"
           @lname = "potential density"
           @units = " "
+        when "cptemp"
+          @lname = "climatological potential temperature"
+          @units = "degC"
+        when "csal"
+          @lname = "climatological salinity"
+          @units = " "
+        when "crhoo"
+          @lname = "climatological potential density"
+          @units = " "
         else
           puts "!ERROR! wrong var name #{@name} (CODE:160304_1747)"
           exit false

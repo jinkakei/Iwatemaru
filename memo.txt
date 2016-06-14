@@ -1,0 +1,7 @@
+
+conv_ncdf.rb  : ncdf/yymm.nc
+merge.rb      : merged.nc
+clim.rb       : clim.nc
+interpolate.rb: int_clim.nc
+
+
