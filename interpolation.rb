@@ -19,9 +19,8 @@ in_fn = "clim.nc"
  na_cptemp = gp_cptemp.val
  cptlin = NArray.sfloat( xn, lyn ).fill( miss_val )
 
- i = 0
- j = 0
  j_end = 0
+ for i in 0..xn-1
  for j in 0..yn-2
    break if na_cptemp[i,j+1] < -100 # missing
    j_bgn = j_end
@@ -29,20 +28,20 @@ in_fn = "clim.nc"
      j_end = j2
      break if ldep[j2] == dep[j+1]
    end
-   #puts "#{dep[j]}, #{ldep[j_bgn]}, #{ldep[j_end]}"
    cptlin[i,j_bgn] = na_cptemp[i,j]
-   puts "#{dep[j]}m, #{cptlin[i,j_bgn]}"
+   #puts "#{dep[j]}m, #{cptlin[i,j_bgn]}"
    for j2 in j_bgn+1..j_end
      cptlin[i,j2] = \
        (  ( ldep[j2] -  dep[j+1] ) * na_cptemp[i,j] \
         + ( dep[j]   - ldep[j2]  ) * na_cptemp[i,j+1] \
        ) / (dep[j] - dep[j+1])
-     puts "  #{ldep[j2]}m: #{cptlin[i,j2]}"
+   #  puts "  #{ldep[j2]}m: #{cptlin[i,j2]}"
    end
-=begin
-=end
  end
-   puts "#{dep[j]}m, #{na_cptemp[i,j]}"
+ end
+   #puts "#{dep[j]}m, #{na_cptemp[i,j]}"
+ 
+ # check interpolated field as merge.rb
 
 
  
