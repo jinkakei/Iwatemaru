@@ -64,7 +64,7 @@ in_fn = "clim.nc"
 
 # lon interpolate
   #dx = 0.01
-  dx = 0.002
+  dx = 0.001
   lxn = ( ( lon[-1] - lon[0] ) / dx ).to_i + 1
   llon = dx * NArray.sfloat( lxn ).indgen + lon[0]
   cptemp_lin = NArray.sfloat( lxn, lyn ).fill( miss_val )

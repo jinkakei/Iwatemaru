@@ -4,8 +4,7 @@ require "~/Iwatemaru/lib_iwatemaru"
 
 # cut
 #=begin
-#in_fn = "interpolated.nc"
-in_fn = "interpolated_dx200mdz2m.nc"
+in_fn = "clim_lin.nc"
   lon_min = 142.2; lon_max = 142.5
   gp_cptemp0   = GPhys::IO.open( in_fn, "cptemp")
     gp_cptemp = gp_cptemp0.cut( "lon" => lon_min..lon_max )
