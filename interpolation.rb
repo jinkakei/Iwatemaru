@@ -113,7 +113,7 @@ in_fn = "clim.nc"
   axp["dep"]["val"] = ldep
   axp["lon"]["val"] = llon
   grid  = GPhys.restore_grid_k247( axp )
-  rslt_fname =  "interpolated.nc"
+  rslt_fname =  "clim_lin.nc"
   puts "output #{rslt_fname}"
   fu = NetCDF.create( rslt_fname )
   ["cptemp", "csal", "crhoo"].each do | vname |
