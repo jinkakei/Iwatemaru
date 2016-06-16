@@ -37,6 +37,10 @@
       end
     end # def set_attr
 
+    def chg_name( name )
+      @name = name
+    end
+
     def chg_val( val )
       @val = val
     end
@@ -69,3 +73,24 @@
       return VArray.new( @val, attr_now, @name )
     end
   end # class VArray_proto_iwate
+
+
+  def set_axp_linterpolate( llon, ldep )
+
+    axp_names = ["llon", "ldep"]
+    x_pts = { \
+      "name" => "llon", \
+      "atts"=>{ "long_name"=> "longitude", "units"=>"deg"}, \
+      "val" => llon \
+    } 
+    #  "atts"=>{ "long_name"=> "linearly interpolated longitude", "units"=>"deg"}, \
+    z_pts = { \
+      "name" => "ldep", \
+      "atts"=>{ "long_name"=> "depth", "units"=>"m"}, \
+      "val" => ldep \
+    } 
+    #  "atts"=>{ "long_name"=> "linearly interpolated depth", "units"=>"m"}, \
+    axp = { "names"=> axp_names, \
+            "llon"=> x_pts, "ldep"=> z_pts }
+    return axp
+  end # def nhm_set_axp
