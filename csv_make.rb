@@ -5,7 +5,7 @@ require "~/Iwatemaru/lib_iwatemaru"
 # cut
 in_fn = "clim_lin.nc"
   #lon_min = 142.2; lon_max = 142.5
-  lon_min = 142.1; lon_max = 142.5
+  lon_min = 142.1; lon_max = 142.5025
   gp_cptemp0   = GPhys::IO.open( in_fn, "cptemp_lin")
     gp_cptemp = gp_cptemp0.cut( "llon" => lon_min..lon_max )
   gp_csal0   = GPhys::IO.open( in_fn, "csal_lin")
@@ -53,7 +53,6 @@ in_fn = "clim_lin.nc"
     end
       fu.write "\n"
     end
-      fu.write "\n"
     for i in 0..xn-1
       fu.write csal[i, 0].round(2)
     for j in 1..yn-1
