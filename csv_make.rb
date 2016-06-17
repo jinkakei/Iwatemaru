@@ -34,17 +34,6 @@ in_fn = "clim_lin.nc"
     puts "out_fn: #{out_fn}"
     puts "  xn = #{xn}, yn = #{yn}"
   fu = File.open( out_fn, "w" )
-=begin
-    for i in 0..xn-1
-      fu.write temp[i, 0].round(2)
-    for j in 1..yn-1
-    #for j in 1..5
-      fu.write ", "
-      fu.write temp[i, j].round(2)
-    end
-      fu.write "\n"
-    end
-=end
     for i in 0..xn-1
       fu.write cptemp[i, 0].round(2)
     for j in 1..yn-1
