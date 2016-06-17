@@ -29,6 +29,7 @@ in_fn = "clim.nc"
   na_crhoo = NArray.sfloat(xn, yn).fill( miss_val )
   #  na_cptemp[0..-1, 0..-2] = cptemp0[0..-1, 0..-1]
   #  ! "cannot convert NArrayMiss to Float"
+  # move
   for i in 0..xn-1
   for j in 0..yn-2
     if cptemp0[i,j] > (miss_val+1)
@@ -38,7 +39,7 @@ in_fn = "clim.nc"
     end
   end
   end
-  #i = 0
+  # vertical extrapolation
   for i in 0..xn-1
   for j in 1..yn-2
   # ToDo: if miss at j = 0?
@@ -59,6 +60,9 @@ in_fn = "clim.nc"
     #  puts "  #{dep[j]}m: #{na_cptemp[i,j].round(2)}"
     #end
   end
+# End: 2016-06-16: test extrapolation
+
+
 # depth iterpolaction ( per dz )
   #dz = 2.0
   dz = 5.0
