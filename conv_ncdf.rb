@@ -1,5 +1,6 @@
 require "~/lib_k247/K247_basic"
-require "~/Iwatemaru/lib_iwatemaru"
+#require "~/Iwatemaru/lib_iwatemaru"
+require "./lib_iwatemaru"
 
 class Iwatemaru_admin
 # file format -> end of class definition    
@@ -194,6 +195,8 @@ class Iwatemaru_admin
     rslt_fname = "#{yymm}.nc"
     puts "output #{rslt_fname}"
     fu = NetCDF.create( rslt_fname )
+      fu.put_att( "original", @fname )
+      fu.put_att( "latitude", @lat[0] )
       [ "ptemp", "sal", "rhoo" ].each do | vname |
         gp_new = GPhys.new( @grid, get_gp( vname ) )
         GPhys::NetCDF_IO.write( fu, gp_new )
